@@ -13,7 +13,22 @@ from ib111 import week_01  # noqa
 #  ⟦ a₁ + a₁ + a₂ + a₃ + a₅ + a₈ = 1 + 1 + 1 + 2 + 5 + 21 = 31 ⟧
 
 def fibfibsum(count):
-    pass
+    res = 0
+    for i in range(1, count + 1):
+        index = nth_fib(i)
+        res += nth_fib(index)
+    return res
+
+
+def nth_fib(n):
+    first = 1
+    second = 1
+    for _ in range(n - 2):
+        tmp = second
+        second += first
+        first = tmp
+
+    return second
 
 
 def main():

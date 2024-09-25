@@ -6,7 +6,13 @@ from ib111 import week_01  # noqa
 # ⟦sₙ = ∑ᵢ₌₁ⁿ aᵢ = ∑ᵢ₌₁ⁿ 4i²⟧.
 
 def even(n):
-    pass
+    result = 0
+    for i in range(1, n + 1):
+        tmp = 0
+        for j in range(i, n + 1):
+            tmp += 4 * j ** 2
+        result += tmp
+    return result
 
 
 def main():

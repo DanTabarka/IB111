@@ -7,7 +7,7 @@ from ib111 import week_01  # noqa
 # celými čísly ‹a›, ‹b› a ‹c›.
 
 def is_right(a, b, c):
-    return  (a ** 2 == b ** 2 + c ** 2) or \
+    return (a ** 2 == b ** 2 + c ** 2) or \
             (b ** 2 == a ** 2 + c ** 2) or \
             (c ** 2 == b ** 2 + a ** 2)
 
@@ -16,15 +16,16 @@ def is_right(a, b, c):
 # ‹a›, ‹b› a ‹c› rovnostranný trojúhelník.
 
 def is_equilateral(a, b, c):
-    return  a == b and b == c
+    return a == b and b == c
 
 
 # Konečně napište predikát, který je pravdivý, popisují-li parametry
 # ‹a›, ‹b› a ‹c› rovnoramenný trojúhelník.
 
 def is_isosceles(a, b, c):
-    return  (a == b or c == b or a == c) and \
+    return (a == b or c == b or a == c) and \
             (a + b > c and a + c > b and b + c > a)
+
 
 def main():
     assert is_right(3, 4, 5)
