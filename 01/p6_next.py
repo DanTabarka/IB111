@@ -6,14 +6,28 @@ from ib111 import week_01  # noqa
 # celého čísla ‹k›.
 
 def next_multiple(number, k):
-    pass
+    for i in range(number + 1, number + k + 1):
+        if i % k == 0:
+            return i
+    return -1
 
 
 # Dále napište funkci, která pro zadané kladné celé číslo
 # ‹number› najde nejbližší větší prvočíslo.
 
 def next_prime(number):
-    pass
+    number += 1
+    while not is_prime(number):
+        number += 1
+
+    return number
+
+
+def is_prime(number):
+    for i in range(2, number):
+        if number % i == 0:
+            return False
+    return True
 
 
 def main():

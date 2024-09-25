@@ -7,7 +7,18 @@ from ib111 import week_01  # noqa
 # 2 + 8 + 34›.
 
 def fibsum(n):
-    pass
+    first = 1
+    second = 1
+    summary = 0
+    while n > 0:
+        tmp = second
+        second += first
+        first = tmp
+        if second % 2 == 0:
+            n -= 1
+            summary += second
+
+    return summary
 
 
 def main():

@@ -6,7 +6,10 @@ from ib111 import week_01  # noqa
 # ⟦i⟧-tý člen ⟦aᵢ = iᵏ⟧.
 
 def powers(n, k):
-    pass
+    sum = 0
+    for i in range(1, n + 1):
+        sum += i ** k
+    return sum
 
 
 def main():

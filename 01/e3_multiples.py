@@ -7,7 +7,11 @@ from ib111 import week_01  # noqa
 # pro ‹n = 10› je očekávaný výsledek ⟦33 = 3 + 5 + 6 + 9 + 10⟧.
 
 def sum_of_multiples(n):
-    pass
+    sum = 0
+    for i in range(1, n + 1):
+        if (i % 3 == 0 or i % 5 == 0):
+            sum += i
+    return sum
 
 
 def main():

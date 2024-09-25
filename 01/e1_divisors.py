@@ -6,7 +6,11 @@ from ib111 import week_01  # noqa
 # 3, 4, 6 a 12 – výsledek ‹divisors(12)› bude tedy 6.
 
 def divisors(number):
-    pass
+    result = 1
+    for i in range(2, number + 1):
+        if number % i == 0:
+            result += 1
+    return result
 
 
 def main():

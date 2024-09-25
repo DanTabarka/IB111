@@ -16,7 +16,14 @@ from ib111 import week_01  # noqa
 # Očekávaný výsledek pro volání ‹sequence(2, 3, 2)› je tedy ‹8›.
 
 def sequence(n, k, initial):
-    pass
+    last = initial
+    for _ in range(1, n + 1):
+        tmp = 0
+        for i in range(1, k + 1):
+            tmp += (-1) ** i * i * last
+        last = tmp
+
+    return last
 
 
 def main():
