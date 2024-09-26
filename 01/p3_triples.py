@@ -15,19 +15,18 @@ from ib111 import week_01  # noqa
 
 def largest_triple(max_side):
     biggest_sum = 0
-    for c in range(1, max_side + 1):
-        for a in range(1, c):
-            for b in range(1, c):
-                if c ** 2 == a ** 2 + b ** 2 and a + b + c > biggest_sum:
-                    biggest_sum = a + b + c
+    for a in range(max_side - 1, 0, -1):
+        for b in range(max_side - 1, 0, -1):
+            c = max_side
+            while c ** 2 < a ** 2 + b ** 2:
+                c += 1
+            if c ** 2 == a ** 2 + b ** 2 and a + b + c > biggest_sum:
+                biggest_sum = a + b + c
 
     return biggest_sum
 
 
 def main():
-    print(largest_triple(10))
-    print(largest_triple(25))
-    print(largest_triple(100))
     assert largest_triple(10) == 24
     assert largest_triple(25) == 72
     assert largest_triple(100) == 288
