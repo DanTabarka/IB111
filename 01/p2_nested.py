@@ -17,19 +17,18 @@ from ib111 import week_01  # noqa
 # ⟦A₃⟧ … (do nekonečna) za sebe:
 #
 #  ⟦ B  → 1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, … ⟧
-#
+#         1  2  3  4  5  6  7  8  9  10 11 12 13 14 15
 # Vaším úkolem je najít ‹n›-tý prvek posloupnosti ⟦B⟧.
 
 def nested(n):
-    limit = 1
-    last = 1
-    for _ in range(n):
-        last += 1
-        if last > limit:
-            limit += 1
-            last = 1
-
-    return last
+    index_of_one = 0
+    plus = 1
+    while (index_of_one < n):
+        index_of_one += plus
+        plus += 1
+    if index_of_one == n:
+        return 1
+    return n - (index_of_one - plus) # (index - plus) => index of prev one
 
 
 # Dále napište funkci ‹nested_sum›, která spočítá sumu prvních ‹n› členů
