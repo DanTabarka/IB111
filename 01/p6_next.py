@@ -17,11 +17,11 @@ def next_multiple(number, k):
 # ‹number› najde nejbližší větší prvočíslo.
 
 def next_prime(number):
-    if (number == 1):
+    if number == 1:
         return 2
-    
+
     number += 1 + number % 2
-    
+
     while not is_prime(number):
         number += 2
 
@@ -29,9 +29,9 @@ def next_prime(number):
 
 
 def is_prime(number):
-    if (number % 2 == 0):
+    if number % 2 == 0:
         return False
-    
+
     for i in range(3, ceil(sqrt(number))):
         if number % i == 0:
             return False
