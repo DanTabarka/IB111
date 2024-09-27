@@ -23,12 +23,12 @@ from ib111 import week_01  # noqa
 def nested(n):
     index_of_one = 0
     plus = 1
-    while (index_of_one < n):
+    while index_of_one < n:
         index_of_one += plus
         plus += 1
     if index_of_one == n:
         return 1
-    return n - (index_of_one - plus) # (index - plus) => index of prev one
+    return n - (index_of_one - plus)    # (index - plus) => index of prev one
 
 
 # Dále napište funkci ‹nested_sum›, která spočítá sumu prvních ‹n› členů
@@ -36,8 +36,14 @@ def nested(n):
 
 def nested_sum(n):
     summary = 0
-    for i in range(n):
-        summary += nested(i)
+    plus = 1
+    upper_bound = 1
+    for _ in range(n):
+        summary += plus
+        plus += 1
+        if upper_bound == plus - 1:
+            plus = 1
+            upper_bound += 1
 
     return summary
 

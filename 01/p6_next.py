@@ -1,4 +1,5 @@
 from ib111 import week_01  # noqa
+from math import sqrt, ceil
 
 
 # Napište funkci, která pro zadané celé číslo ‹number›
@@ -16,15 +17,22 @@ def next_multiple(number, k):
 # ‹number› najde nejbližší větší prvočíslo.
 
 def next_prime(number):
-    number += 1
+    if (number == 1):
+        return 2
+    
+    number += 1 + number % 2
+    
     while not is_prime(number):
-        number += 1
+        number += 2
 
     return number
 
 
 def is_prime(number):
-    for i in range(2, number):
+    if (number % 2 == 0):
+        return False
+    
+    for i in range(3, ceil(sqrt(number))):
         if number % i == 0:
             return False
     return True
