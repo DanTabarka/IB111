@@ -18,11 +18,31 @@ from ib111 import week_02  # noqa
 # cifry je celkový součet ⟦20⟧. Protože je beze zbytku dělitelný
 # deseti, číslo karty je platné.
 
+def get_digit_count(number):
+    count = 0
+    while number > 0:
+        number //= 10
+        count += 1
+    return count
+
+
 def is_valid_card(number):
-    pass
+    checkcipher = number % 10
+    number //= 10
+    checksum = 0
+
+    for i in range(1, get_digit_count(number) + 1):
+        multiplication = 1 + i % 2      # if even than 2, else 1
+        checksum += multiplication * (number % 10)
+        if multiplication * (number % 10) > 9:
+            checksum -= 9
+        number //= 10
+
+    return (checksum + checkcipher) % 10 == 0
 
 
 def main():
+    print(is_valid_card(4556737586899855))
     assert is_valid_card(28316)
     assert is_valid_card(4556737586899855)
     assert is_valid_card(4929599116478604)

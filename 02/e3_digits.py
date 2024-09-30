@@ -7,7 +7,17 @@ from ib111 import week_02  # noqa
 # vyskytuje šestkrát, konkrétně v číslech: 1 10 11 12 13.
 
 def count_digit_in_sequence(digit, low, high):
-    pass
+    count = 0
+    if low == 0 and digit == 0:
+        count += 1
+    
+    for num in range(low, high + 1):
+        while num > 0:
+            if num % 10 == digit:
+                count += 1
+            num //= 10
+
+    return count
 
 
 def main():

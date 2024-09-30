@@ -7,7 +7,13 @@ from ib111 import week_02  # noqa
 # největším vhodným kandidátem).
 
 def gcd(x1, x2):
-    pass
+    m = x1 if x1 < x2 else x2
+
+    for i in range(m, 1, -1):
+        if x1 % i == 0 and x2 % i == 0:
+            return i
+    return 1
+    
 
 
 def main():

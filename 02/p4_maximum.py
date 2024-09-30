@@ -12,7 +12,13 @@ def poly(x):
 
 
 def maximum(low, high):
-    pass
+    m = low
+
+    for i in range(low + 1, high + 1):
+        if poly(m) < poly(i):
+            m = i
+
+    return m
 
 
 def main():

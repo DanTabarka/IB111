@@ -10,8 +10,22 @@ from ib111 import week_02  # noqa
 # zapsat v šestnáctkové soustavě zápisem ‹0x1b› nebo osmičkové jako
 # ‹0o33›).
 
+
+def bin_digit_count(number):
+    count = 1
+    while 2 ** count <= number:
+        count += 1
+    return count
+
+
 def joined(start, count):
-    pass
+    res = 0
+
+    for i in range(start, start + count):
+        res *= 2 ** bin_digit_count(i)
+        res += i
+
+    return res
 
 
 def main() -> None:
