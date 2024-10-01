@@ -18,25 +18,23 @@ from math import ceil, sqrt
 # chytrá řešení, jen je třeba nedělat zbytečnou práci navíc.)
 
 def is_prime(number):
-    if number % 2 == 0:
+    if number % 2 == 0 or number % 3 == 0:
         return False
 
-    for i in range(3, ceil(sqrt(number)), 2):
-        if number % i == 0:
+    for i in range(5, ceil(sqrt(number)), 6):
+        if number % i == 0 or number % (i + 2) == 0:
             return False
     return True
 
 
 def next_prime(number):
-    if number == 1:
-        return 2
+    if number == 2:
+        return 3
 
     number += 1 + number % 2
 
     while not is_prime(number):
         number += 2
-        while number % 3 == 0 or number % 5 == 0:
-            number += 2
 
     return number
 
@@ -61,6 +59,7 @@ def main():
     assert nth_smallest_prime_divisor(42350, 3) == 5
     assert nth_smallest_prime_divisor(42350, 4) == 7
     assert nth_smallest_prime_divisor(42350, 7) is None
+    print(nth_smallest_prime_divisor(4039636, 3))
 
 
 if __name__ == '__main__':
