@@ -1,6 +1,6 @@
 from ib111 import week_01  # noqa
 from math import ceil, sqrt
-# hodnotit: ne/ano (umažte „ne/“ pro hodnocení kvality tohoto řešení)
+# hodnotit: ano (umažte „ne/“ pro hodnocení kvality tohoto řešení)
 
 
 # Napište čistou funkci ‹nth_smallest_prime_divisor›, která vrátí ‹index›-té
@@ -21,7 +21,7 @@ def is_prime(number):
     if number % 2 == 0:
         return False
 
-    for i in range(3, ceil(sqrt(number))):
+    for i in range(3, ceil(sqrt(number)), 2):
         if number % i == 0:
             return False
     return True
@@ -35,6 +35,8 @@ def next_prime(number):
 
     while not is_prime(number):
         number += 2
+        while number % 3 == 0 or number % 5 == 0:
+            number += 2
 
     return number
 

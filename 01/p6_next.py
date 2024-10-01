@@ -7,10 +7,7 @@ from math import sqrt, ceil
 # celého čísla ‹k›.
 
 def next_multiple(number, k):
-    for i in range(number + 1, number + k + 1):
-        if i % k == 0:
-            return i
-    return -1
+    return number + k - (number % k)
 
 
 # Dále napište funkci, která pro zadané kladné celé číslo

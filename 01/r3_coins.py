@@ -6,16 +6,17 @@ from ib111 import week_01  # noqa
 # Spočtěte, kolik nejméně mincí potřebujeme.
 
 def coins(value):
-    coins_count = 0
-    while value >= 5:
-        value -= 5
-        coins_count += 1
-    while value >= 2:
-        value -= 2
-        coins_count += 1
-    for _ in range(value):
-        coins_count += 1
-    return coins_count
+    coins = 0
+
+    coins += value // 5
+    value %= 5
+
+    coins += value // 2
+    value %= 2
+    
+    coins += value
+    
+    return coins
 
 
 def main():

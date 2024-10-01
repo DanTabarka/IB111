@@ -11,8 +11,18 @@ from ib111 import week_01  # noqa
 # dělitele s výjimkou čísla samotného; např. vlastní dělitelé
 # čísla 12 jsou 1, 2, 3, 4, 6.
 
+def get_dividers_sum(number):
+    summ = 0
+
+    for i in range(1, number // 2 + 1):
+        if number % i == 0:
+            summ += i
+
+    return summ
+
+
 def amicable(a, b):
-    pass
+    return get_dividers_sum(a) == b and  get_dividers_sum(b) == a
 
 
 def main():

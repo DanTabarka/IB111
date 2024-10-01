@@ -1,5 +1,5 @@
 from ib111 import week_01  # noqa
-
+from math import ceil, sqrt
 
 # Napište funkci, která ověří, zda je číslo ‹number› prvočíslo.
 
@@ -7,8 +7,12 @@ from ib111 import week_01  # noqa
 def is_prime(number):
     if number == 1:
         return False
-    for i in range(2, number):
-        if number % i == 0:
+
+    if number % 2 == 0:
+        return number == 2
+    
+    for divisor in range(3, ceil(sqrt(number)), 2):
+        if number % divisor == 0:
             return False
     return True
 

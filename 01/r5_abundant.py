@@ -10,7 +10,13 @@ from ib111 import week_01  # noqa
 # čísla 12 jsou 1, 2, 3, 4, 6.
 
 def is_abundant(number):
-    pass
+    summ = 0
+
+    for i in range(1, number // 2 + 1):
+        if number % i == 0:
+            summ += i
+
+    return number < summ
 
 
 def main():
@@ -22,6 +28,8 @@ def main():
     assert is_abundant(100)
     assert is_abundant(120)
 
+    assert not is_abundant(1)
+    assert not is_abundant(5)
     assert not is_abundant(7)
     assert not is_abundant(15)
     assert not is_abundant(55)
