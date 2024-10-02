@@ -1,5 +1,6 @@
 from ib111 import week_00  # noqa
-from turtle import done
+from turtle import done, forward, right, left, backward, penup, pendown
+from math import pi, sin
 
 # hodnotit: ne/ano (umažte „ne/“ pro hodnocení kvality tohoto řešení)
 
@@ -31,8 +32,58 @@ from turtle import done
 # Použití procedur ‹speed›, ‹delay› a ‹done› se sice nepovažuje za chybu,
 # ale budou v testech ignorovány, tj. «nebudou mít žádný efekt».
 
+
+def polygon(length):
+    r = length / (2 * sin(pi / 12))
+    forward(r)
+    right(90 + 360 / 24)
+    pendown()
+    for _ in range(12):
+        forward(length)
+        right(360 / 12)
+
+    penup()
+    right(90 - 360 / 24)
+    forward(r)
+    right(180)
+    penup()
+
+
+def draw_rectangle(multiple_a, multiple_b, side):
+    pendown()
+    left(90)
+    forward(multiple_a * side / 2)
+    for _ in range(2):
+        right(90)
+        forward(multiple_b * side)
+        right(90)
+        forward(multiple_a * side)
+
+    backward(multiple_a * side / 2)
+    right(90)
+
+    penup()
+
+
 def clock(epoch_time, side):
-    pass
+    penup()
+    left(90)
+    seconds = epoch_time % 60
+    seconds_angle = 360 * (seconds / 60.0)
+    minutes = epoch_time // 60 % (60)
+    minutes_angle = 360 * (minutes / 60.0) + seconds_angle / 60.0
+    hours = epoch_time // 3600 % (12)
+    hours_angle = 360 * (hours / 12.0) + minutes_angle / 12.0
+
+    polygon(side)
+
+    right(seconds_angle)
+    draw_rectangle(0, 1.8, side)
+    right(360 - seconds_angle + minutes_angle)
+    draw_rectangle(0.05, 1.6, side)
+    right(360 - minutes_angle + hours_angle)
+    draw_rectangle(0.1, 1.4, side)
+    left(hours_angle)
 
 
 def main():

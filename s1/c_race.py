@@ -47,11 +47,26 @@ from ib111 import week_01  # noqa
 # (Nemusí být nijak shora omezené; předpokládejte, že máme kostky s různě
 # velkými čísly.)
 
+def get_possition(arena, player):
+    possition = 1
+    while arena > player * 5 ** possition:
+        if arena % player * 5 ** possition == 0:
+            return possition
+    return 0
+
+
+
 def play(arena, player, throw):
-    pass
+    print(get_possition(arena, player))
 
 
 def main():
+    print(play(12510, 1, 4))
+    print(play(12510, 2, 4))
+    print(play(12510, 3, 4))
+    print(play(12510, 4, 4))
+
+
     for p in range(1, 5):
         assert play(0, p, 1) == p
 
