@@ -48,25 +48,40 @@ from ib111 import week_01  # noqa
 # velkými čísly.)
 
 def get_possition(arena, player):
-    possition = 1
-    while arena > player * 5 ** possition:
-        if arena % player * 5 ** possition == 0:
+    possition = 0
+    while arena > 0:
+        digit = arena % 5
+        if digit == player:
             return possition
-    return 0
 
+        possition += 1
+        arena //= 5
+
+    return -1
 
 
 def play(arena, player, throw):
-    print(get_possition(arena, player))
+    if throw == 0:
+        return arena
+
+    player_possition = get_possition(arena, player)
+    if player_possition != -1:
+        arena -= player * 5 ** player_possition
+
+    player_possition += throw
+    for i in range(1, 5):
+        if i == player_possition:
+            continue
+        if player_possition == get_possition(arena, i):
+            arena -= i * 5 ** player_possition
+            arena += player * 5 ** player_possition
+            return arena
+
+    arena += player * 5 ** player_possition
+    return arena
 
 
 def main():
-    print(play(12510, 1, 4))
-    print(play(12510, 2, 4))
-    print(play(12510, 3, 4))
-    print(play(12510, 4, 4))
-
-
     for p in range(1, 5):
         assert play(0, p, 1) == p
 

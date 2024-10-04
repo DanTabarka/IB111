@@ -53,9 +53,29 @@ from ib111 import week_03  # noqa
 # Na vstupu dostanete stav (konfiguraci) ‹state›, výstupem funkce je
 # nový seznam, který obsahuje stav vzniklý aplikací výše uvedených
 # pravidel na ‹state›.
+def spin_number(state, i):
+    left = 0 if i - 1 < 0 else state[i - 1]
+    middle = state[i]
+    right = 0 if i + 1 >= len(state) else state[i + 1]
+
+    if left and middle and right or \
+            left and middle:
+        return 0
+    if left and not middle and right or \
+            left and not middle and not right or \
+            not left and not middle and right:
+        return 1
+
+    return state[i]
+
 
 def cellular_step(state):
-    pass
+    new_state = []
+
+    for i in range(len(state)):
+        new_state.append(spin_number(state, i))
+
+    return new_state
 
 
 def main() -> None:

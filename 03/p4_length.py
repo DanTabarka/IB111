@@ -1,5 +1,5 @@
 from ib111 import week_03  # noqa
-from math import isclose
+from math import isclose, sqrt
 
 
 # Napište čistou funkci, která dostane na vstup seznam bodů v rovině
@@ -19,11 +19,20 @@ from math import isclose
 
 
 def point_distance(a, b):
-    pass
+    ax, ay = a
+    bx, by = b
+    return sqrt((ax - bx) ** 2 + (ay - by) ** 2)
 
 
 def length(points):
-    pass
+    if len(points) <= 1:
+        return 0.0
+
+    res = 0.0
+    for i in range(len(points) - 1):
+        res += point_distance(points[i], points[i + 1])
+
+    return res
 
 
 def main():
