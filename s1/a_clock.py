@@ -33,7 +33,7 @@ from math import pi, sin
 # ale budou v testech ignorovány, tj. «nebudou mít žádný efekt».
 
 
-def polygon(length):
+def draw_polygon(length):
     r = length / (2 * sin(pi / 12))
     forward(r)
     right(90 + 360 / 24)
@@ -73,16 +73,21 @@ def clock(epoch_time, side):
     minutes = epoch_time // 60 % (60)
     minutes_angle = 360 * (minutes / 60.0) + seconds_angle / 60.0
     hours = epoch_time // 3600 % (12)
-    hours_angle = 360 * (hours / 12.0) + minutes_angle / 12.0
+    hours_angle = 360 * (hours / 12.0) + minutes_angle / 12.0 + \
+        seconds_angle / 3600.0
 
-    polygon(side)
+    draw_polygon(side)
 
     right(seconds_angle)
-    draw_rectangle(0, 1.8, side)
+    draw_rectangle(0, 1.8, side)        # seconds
     right(360 - seconds_angle + minutes_angle)
-    draw_rectangle(0.05, 1.6, side)
+    backward(side * 0.05 * 0.5)
+    draw_rectangle(0.05, 1.6, side)     # minutes
+    forward(side * 0.05 * 0.5)
     right(360 - minutes_angle + hours_angle)
-    draw_rectangle(0.1, 1.4, side)
+    backward(side * 0.1 * 0.5)
+    draw_rectangle(0.1, 1.4, side)      # hours
+    forward(side * 0.1 * 0.5)
     left(hours_angle)
 
 

@@ -34,7 +34,34 @@ from ib111 import week_03  # noqa
 # změně; v opačném případě vrací ‹False›.
 
 def slide(row, to_left):
-    pass
+    changed = False
+
+    if to_left:
+        my_range = range(len(row) - 1)
+        add = 1
+    else:
+        my_range = range(len(row) - 1, 0, -1)
+        add = -1
+
+    for i in my_range:
+        next = i + add
+        while 0 < next < len(row) - 1 and row[next] == 0:
+            next += add
+        if row[i] == row[next] and row[i] != 0:
+            row[i] *= 2
+            row[next] = 0
+            changed = True
+
+    for i in my_range:
+        next = i + add
+        while 0 < next < len(row) - 1 and row[next] == 0:
+            next += add
+        if row[i] == 0 and row[next] != 0:
+            row[i] = row[next]
+            row[next] = 0
+            changed = True
+
+    return changed
 
 
 def main():
