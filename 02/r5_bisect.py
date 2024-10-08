@@ -21,7 +21,17 @@ from math import sqrt
 # volat jako libovolnou jinou funkci.
 
 def bisect(fun, low, high, eps):
-    pass
+    mid = (low + high) / 2
+
+    mid_value = fun(mid)
+
+    if abs(mid_value) < eps:
+        return mid
+    
+    if fun(low) * mid_value < 0:    # low -> mid change of sign
+        return bisect(fun, low, mid, eps) 
+    return bisect(fun, mid, high, eps)  # mid -> high change of sign
+
 
 
 def fun_a(x):
