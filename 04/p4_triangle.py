@@ -28,25 +28,46 @@ from math import sqrt, sin, cos, radians, acos, pi, isclose
 #    typová kontrola. Typ funkce ‹perimeter› neměňte.
 
 
+def is_one_none(x: float, y: float, z: float) -> bool:
+    return x is None or y is None or z is None
+
+
 def perimeter(a: float | None,
               b: float | None,
               c: float | None,
               alpha: float | None,
               beta: float | None,
               gamma: float | None) -> float | None:
-    pass
+    if not is_one_none(a, b, c):
+        return perimeter_sss(a, b, c)
+
+    if not is_one_none(a, gamma, b):
+        return perimeter_sas(a, gamma, b)
+    if not is_one_none(a, beta, c):
+        return perimeter_sas(a, beta, c)
+    if not is_one_none(b, alpha, c):
+        return perimeter_sas(b, alpha, c)
+
+    if not is_one_none(beta, a, gamma):
+        return perimeter_asa(beta, a, gamma)
+    if not is_one_none(alpha, b, gamma):
+        return perimeter_asa(alpha, b, gamma)
+    if not is_one_none(alpha, c, beta):
+        return perimeter_asa(alpha, c, beta)
+
+    return None
 
 
 # Funkce ‹perimeter_sss› spočte obvod trojúhelníku zadaného třemi stranami.
 
-def perimeter_sss(a, b, c):
+def perimeter_sss(a: float, b: float, c: float) -> float:
     return a + b + c
 
 
 # Funkce ‹perimeter_sas› spočte obvod trojúhelníku zadaného dvěma stranami a
 # nimi sevřeným úhlem.
 
-def perimeter_sas(a, angle, b):
+def perimeter_sas(a: float, angle: float, b: float) -> float:
     c = sqrt(a ** 2 + b ** 2 - 2 * a * b * cos(radians(angle)))
     return perimeter_sss(a, b, c)
 
@@ -54,7 +75,7 @@ def perimeter_sas(a, angle, b):
 # Funkce ‹perimeter_asa› spočte obvod trojúhelníku zadaného stranou a jí
 # přilehlých úhlů.
 
-def perimeter_asa(alpha, c, beta):
+def perimeter_asa(alpha: float, c: float, beta: float) -> float:
     gamma = radians(180 - alpha - beta)
     alpha = radians(alpha)
     beta = radians(beta)

@@ -14,9 +14,22 @@ from ib111 import week_04  # noqa
 # ‹missing_visits›, která zjistí, kteří pacienti nebyli na prohlídce
 # od roku ‹year›. Jako výsledek vraťte seznam identifikátorů
 # pacientů.
+Visit = tuple[int, int, int, int]   # year, pulz, systolic, diastolic
+Patient = tuple[int, list[Visit]]   # id, visits
 
-def missing_visits(year, patients):
-    pass
+
+def missing_visits(year: int, patients: list[Patient]) -> list[int]:
+    missing = []
+
+    for patient in patients:
+        id, visits = patient
+
+        year_of_visit, _, _, _ = visits[-1]
+        
+        if year_of_visit <= year:
+            missing.append(id)
+
+    return missing
 
 
 # Dále napište a otypujte funkci ‹patient_reports›, která vrátí
@@ -29,8 +42,31 @@ def missing_visits(year, patients):
 # 89, 125, 82), (2020, 93, 120, 88)])› je ‹(93, False, False,
 # True)›.
 
-def patient_reports(patients):
-    pass
+def patient_reports(patients: list[Patient]) -> list[Visit]:
+    report = []
+
+    for pat in patients:
+        _, visits = pat
+
+        _, max_pulz, sis, dia = visits[0]
+        is_pulz = True
+        is_sis = True
+        is_dia = True
+
+        for visit in visits:
+            _, pulz, sis2, dia2 = visit
+            is_pulz = max_pulz <= pulz and is_pulz
+            max_pulz = max(max_pulz, pulz)
+            
+            is_sis = sis < sis2 and is_sis
+            sis = sis2
+
+            is_dia = dia < dia2 and is_dia
+            dia = dia2
+
+        report.append((max_pulz, is_pulz, is_sis, is_dia ))
+    
+    return report
 
 
 def main() -> None:
