@@ -15,7 +15,30 @@ from ib111 import week_05  # noqa
 # delšího vstupního seznamu.
 
 def largest_common_sublist_sum(left: list[int], right: list[int]) -> int:
-    pass
+    largest_sum = 0
+    tmp_sum = 0
+
+    idx_left = 0
+    idx_right = 0
+
+    while idx_left < len(left) and idx_right < len(right):
+        if left[idx_left] == right[idx_right]:
+            tmp_sum += left[idx_left]
+            idx_left += 1
+            idx_right += 1
+
+        else:
+            if tmp_sum > largest_sum:
+                largest_sum = tmp_sum
+            tmp_sum = 0
+
+            if left[idx_left] > right[idx_right]:
+                idx_right += 1
+            elif left[idx_left] < right[idx_right]:
+                idx_left += 1
+    return largest_sum
+        
+
 
 
 def main() -> None:

@@ -25,7 +25,7 @@ def missing_visits(year: int, patients: list[Patient]) -> list[int]:
         id, visits = patient
 
         year_of_visit, _, _, _ = visits[-1]
-        
+
         if year_of_visit <= year:
             missing.append(id)
 
@@ -53,19 +53,19 @@ def patient_reports(patients: list[Patient]) -> list[Visit]:
         is_sis = True
         is_dia = True
 
-        for visit in visits:
-            _, pulz, sis2, dia2 = visit
-            is_pulz = max_pulz <= pulz and is_pulz
+        for i in range(1, len(visits)):
+            _, pulz, sis2, dia2 = visits[i]
+            is_pulz = max_pulz < pulz and is_pulz
             max_pulz = max(max_pulz, pulz)
-            
+
             is_sis = sis < sis2 and is_sis
             sis = sis2
 
             is_dia = dia < dia2 and is_dia
             dia = dia2
 
-        report.append((max_pulz, is_pulz, is_sis, is_dia ))
-    
+        report.append((max_pulz, is_pulz, is_sis, is_dia))
+
     return report
 
 
