@@ -33,7 +33,7 @@ def modus(marks: dict[int, str]) -> set[str]:
 # neuvažujeme.
 
 def exam(marks: set[str]) -> bool:
-        return {"A", "B", "C", "D", "E", "F", "X"} >= marks
+    return {"A", "B", "C", "D", "E", "F", "X"} >= marks
 
 
 def kolokviem(marks: set[str]) -> bool:
