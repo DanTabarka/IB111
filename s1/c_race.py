@@ -70,7 +70,7 @@ def play(arena, player, throw):
 
     player_possition += throw
     for i in range(1, 5):
-        if i == player_possition:
+        if i == player:
             continue
         if player_possition == get_possition(arena, i):
             arena -= i * 5 ** player_possition
@@ -89,6 +89,8 @@ def main():
     assert play(84770, 4, 5) == 147250
     assert play(84770, 3, 4) == 240645
     assert play(12510, 1, 2) == 12505
+
+    assert play(5, 2, 2) == 10
 
 
 if __name__ == '__main__':
