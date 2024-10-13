@@ -18,7 +18,31 @@ from ib111 import week_06  # noqa
 
 def histogram(data: list[int], max_amplitude: int,
               min_amplitude: int, bucket: int) -> dict[int, int]:
-    pass
+    filtered_amplitudes = []
+    for amp in data:    # filtering
+        if amp <= max_amplitude and amp >= min_amplitude:
+            filtered_amplitudes.append(amp)
+
+    buckets = []    # bucketing
+    index = 0
+    while index < len(filtered_amplitudes) - bucket:
+        summary = 0
+        for i in range(index, index + bucket):
+            summary += filtered_amplitudes[i]
+        buckets.append(round(float(summary)/bucket))
+        index += bucket
+    summary = 0
+    for i in range(index, len(filtered_amplitudes)):
+        summary += filtered_amplitudes[i]
+    if summary != 0: 
+        buckets.append(round(float(summary)/(len(filtered_amplitudes) - index)))
+
+    bucket_counts = {}      # dictionarring
+    for imp in buckets:
+        bucket_counts[imp] = bucket_counts.get(imp, 0) + 1
+
+    return bucket_counts
+    
 
 
 def main() -> None:

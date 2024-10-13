@@ -21,7 +21,28 @@ Area = list[list[int]]
 
 
 def flood_fill(area: Area, start: Position, colour: int) -> None:
-    pass
+    stack = [start]
+    row, col = start
+    colour_to_fill = area[row][col]
+    row_count = len(area)
+    col_count = len(area[0])
+
+    while stack:
+        row, col = stack.pop()
+        area[row][col] = colour
+
+        # up
+        if row - 1 >= 0 and area[row - 1][col] == colour_to_fill:
+            stack.append((row - 1, col))
+        # down
+        if row + 1 < row_count and area[row + 1][col] == colour_to_fill:
+            stack.append((row + 1, col))
+        # left
+        if col - 1 >= 0 and area[row][col - 1] == colour_to_fill:
+            stack.append((row, col - 1))
+        # right
+        if col + 1 < col_count and area[row][col + 1] == colour_to_fill:
+            stack.append((row, col + 1))
 
 
 def main() -> None:

@@ -29,8 +29,29 @@ from ib111 import week_06  # noqa
 # Napište predikát, který o číslu ‹number› rozhodne, je-li
 # ‹base›-šťastné.
 
+def sum_of_squares_of_digits(number: int, base: int) -> int:
+    digits = []
+    while number > 0:
+        digits.append(number % base)
+        number //= base
+
+    summary = 0
+    for dig in digits:
+        summary += dig ** 2
+
+    return summary
+
+
 def is_b_happy(number: int, base: int) -> bool:
-    pass
+    calculation = []
+    while number not in calculation:
+        if number == 1:
+            return True
+
+        calculation.append(number)
+        number = sum_of_squares_of_digits(number, base)
+
+    return False
 
 
 def main() -> None:

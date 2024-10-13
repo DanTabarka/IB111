@@ -27,7 +27,19 @@ from ib111 import week_06  # noqa
 # jediné číslo. Toto číslo je výsledkem vyhodnocení zadaného výrazu.
 
 def rpn_eval(expr: list[str], variables: dict[str, int]) -> int:
-    pass
+    stack = []
+
+    for var in expr:
+        if var == "+":
+            a, b = stack.pop(), stack.pop()
+            stack.append(a + b)
+        elif var == "*":
+            a, b = stack.pop(), stack.pop()
+            stack.append(a * b)
+        else:
+            stack.append(variables[var])
+
+    return stack.pop()
 
 
 def main() -> None:

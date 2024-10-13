@@ -26,9 +26,28 @@ from ib111 import week_05  # noqa
 Colour = tuple[int, int, int]
 
 
+def calculate_distance(colour1: Colour, colour2: Colour) -> int:
+    r1, g1, b1 = colour1
+    r2, g2, b2 = colour2
+
+    return abs(r1 - r2) + abs(g1 - g2) + abs(b1 - b2)
+
+
 def nearest_colour(names: dict[str, Colour],
                    colour: Colour) -> set[str]:
-    pass
+    min_distance = 255 + 255 + 255  # maximal possible distance
+    nearest = set()
+
+    for name, c in names.items():
+        distance = calculate_distance(c, colour)
+
+        if distance < min_distance:
+            nearest = {name}
+            min_distance = distance
+        elif distance == min_distance:
+            nearest.add(name)
+
+    return nearest
 
 
 def main() -> None:
