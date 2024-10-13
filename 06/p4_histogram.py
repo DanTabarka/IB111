@@ -20,7 +20,7 @@ def histogram(data: list[int], max_amplitude: int,
               min_amplitude: int, bucket: int) -> dict[int, int]:
     filtered_amplitudes = []
     for amp in data:    # filtering
-        if amp <= max_amplitude and amp >= min_amplitude:
+        if min_amplitude <= amp <= max_amplitude:
             filtered_amplitudes.append(amp)
 
     buckets = []    # bucketing
@@ -34,15 +34,15 @@ def histogram(data: list[int], max_amplitude: int,
     summary = 0
     for i in range(index, len(filtered_amplitudes)):
         summary += filtered_amplitudes[i]
-    if summary != 0: 
-        buckets.append(round(float(summary)/(len(filtered_amplitudes) - index)))
+    if summary != 0:
+        avg = round(float(summary) / (len(filtered_amplitudes) - index))
+        buckets.append(avg)
 
     bucket_counts = {}      # dictionarring
     for imp in buckets:
         bucket_counts[imp] = bucket_counts.get(imp, 0) + 1
 
     return bucket_counts
-    
 
 
 def main() -> None:

@@ -20,8 +20,24 @@ from ib111 import week_06  # noqa
 # ‹False›, protože neexistuje žádná posloupnost operací «push»
 # a «pop», která by odpovídala těmto seznamům.
 
+
 def valid_stack_ops(pushed: list[int], popped: list[int]) -> bool:
-    pass
+    stack = []
+    pushed_copy = pushed.copy()
+
+    for popp in popped:
+        if stack and stack[-1] == popp:
+            stack.pop()
+        else:
+            while pushed_copy and pushed_copy[0] != popp:
+                stack.append(pushed_copy.pop(0))
+
+            value_to_compare = None if not pushed_copy else pushed_copy.pop(0)
+
+            if value_to_compare != popp:
+                return False
+
+    return True
 
 
 def main() -> None:
