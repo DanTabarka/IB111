@@ -8,9 +8,6 @@ from ib111 import week_03  # noqa
 # čistá). Pokuste se funkci naprogramovat «efektivně».
 
 def merge(a, b):
-    if not a or not b:
-        return a if not b else b
-
     ptr_a = 0
     ptr_b = 0
     merged = []
@@ -23,11 +20,11 @@ def merge(a, b):
             merged.append(b[ptr_b])
             ptr_b += 1
 
-    tmp_ptr = ptr_a if ptr_b == len(b) else ptr_b
-    tmp_arr = a if ptr_b == len(b) else b
+    for i in range(ptr_a, len(a)):  # remainder of A
+        merged.append(a[i])
 
-    for i in range(tmp_ptr, len(tmp_arr)):
-        merged.append(tmp_arr[i])
+    for i in range(ptr_b, len(b)):  # remainder of B
+        merged.append(b[i])
 
     return merged
 

@@ -5,7 +5,13 @@ from ib111 import week_03  # noqa
 # seznamu tak, že vnořené seznamy pospojuje za sebe.
 
 def concat(lists):
-    pass
+    flat_list = []
+
+    for lst in lists:
+        for num in lst:
+            flat_list.append(num)
+    
+    return flat_list
 
 
 def main():

@@ -63,7 +63,8 @@ def index_of_column(name: str, header: Header) -> int:
 # nejsou ‹None›) v sloupci se jménem ‹name›. Můžete předpokládat, že
 # sloupec se jménem ‹name› se v tabulce nachází.
 
-def values(name: str, table: Table) -> list[str]:
+# def values(name: str, table: Table) -> list[str]:
+def values(name: str, table: Table) -> Record:
     header, records = table
     index = index_of_column(name, header)
     res = []
@@ -95,11 +96,11 @@ def drop_column(name: str, table: Table) -> Table:
 # implementaci neměňte, pouze přidejte typové anotace).
 
 
-def make_empty():
+def make_empty() -> Table:
     return ["A", "B", "C", "D"], []
 
 
-def make_table():
+def make_table() -> Table:
     return (["A", "B", "C"],
             [["a1", "b1", None],
              ["a2", "b2", "c2"],

@@ -6,38 +6,12 @@ from ib111 import week_03  # noqa
 # četnost. Výstupní seznam musí být seřazený vzestupně dle první
 # složky. Můžete předpokládat, že v ‹data› se nachází pouze celá
 # čísla z rozsahu [0, 100] (včetně).
-def get_index(arr, number):
-    for i, num in enumerate(arr):
-        if num == number:
-            return i
-    return -1
-
-
-def bubble_sort(arr):
-    n = len(arr)
-    for i in range(n):
-        for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-
 
 def histogram(data):
-    bubble_sort(data)
-    numbers = []
-    frequency = []
-
-    for num in data:
-        index = get_index(numbers, num)
-        if index == -1:
-            numbers.append(num)
-            frequency.append(1)
-        else:
-            frequency[index] += 1
-
-    pairs = []
-    for i in range(len(numbers)):
-        pairs.append((numbers[i], frequency[i]))
-
+    c = [0 for _ in range(100)]
+    for number in data:
+        c[number] += 1
+    pairs = [(i, c[i]) for i in range(100) if c[i] > 0]
     return pairs
 
 

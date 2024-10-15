@@ -18,8 +18,23 @@ from ib111 import week_03  # noqa
 # takže oba následovné výsledky pro seznam ‹[3, 4, 1, 2, 0]› a index
 # ‹0› jsou správné: ‹[1, 0, 2, 3, 4]› nebo ‹[1, 2, 0, 3, 4]›.
 
-def partition(data, idx):
-    pass
+def partition(data, pivot):
+    start_index = 0
+    end_index = len(data) - 1
+
+    while start_index < end_index:
+        if data[start_index] > pivot:
+            data[start_index], data[end_index] = data[end_index], data[start_index]
+            end_index -= 1
+        elif data[end_index] < pivot:
+            data[start_index], data[end_index] = data[end_index], data[start_index]
+            start_index += 1
+        else:
+            if data[start_index] != pivot:
+                start_index += 1
+            if data[end_index] != pivot:
+                end_index -= 1
+    return data
 
 
 def main():
@@ -31,12 +46,11 @@ def main():
     run_test([6, 9, 3, 0, 1], 2)
 
 
-def run_test(data, idx):
-    pivot = data[idx]
+def run_test(data, pivot):
     count = len(data)
     sum_ = sum(data)
 
-    partition(data, idx)
+    partition(data, pivot)
 
     assert len(data) == count
     assert sum(data) == sum_
