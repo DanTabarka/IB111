@@ -28,7 +28,7 @@ from math import sqrt, sin, cos, radians, acos, pi, isclose
 #    typová kontrola. Typ funkce ‹perimeter› neměňte.
 
 
-def is_one_none(x: float, y: float, z: float) -> bool:
+def is_one_none(x: float | None, y: float | None, z: float | None) -> bool:
     return x is None or y is None or z is None
 
 
@@ -39,20 +39,27 @@ def perimeter(a: float | None,
               beta: float | None,
               gamma: float | None) -> float | None:
     if not is_one_none(a, b, c):
+        assert a is not None and b is not None and c is not None
         return perimeter_sss(a, b, c)
 
     if not is_one_none(a, gamma, b):
+        assert a is not None and b is not None and gamma is not None
         return perimeter_sas(a, gamma, b)
     if not is_one_none(a, beta, c):
+        assert a is not None and beta is not None and c is not None
         return perimeter_sas(a, beta, c)
     if not is_one_none(b, alpha, c):
+        assert alpha is not None and b is not None and c is not None
         return perimeter_sas(b, alpha, c)
 
     if not is_one_none(beta, a, gamma):
+        assert a is not None and beta is not None and gamma is not None
         return perimeter_asa(beta, a, gamma)
     if not is_one_none(alpha, b, gamma):
+        assert alpha is not None and b is not None and gamma is not None
         return perimeter_asa(alpha, b, gamma)
     if not is_one_none(alpha, c, beta):
+        assert alpha is not None and beta is not None and c is not None
         return perimeter_asa(alpha, c, beta)
 
     return None

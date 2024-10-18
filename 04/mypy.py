@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import subprocess
 
@@ -11,5 +9,5 @@ for file in os.listdir(folder):
         command = ["mypy", "--strict", file]
         print(f"I'm running: {' '.join(command)}")
         print("________________________________________________________________________________")
-        subprocess.run(command)
+        subprocess.run(command, shell=True)
         print()

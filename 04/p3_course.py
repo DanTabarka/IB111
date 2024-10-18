@@ -30,7 +30,7 @@ def failed(course: Course) -> list[Student]:
 # úspěšných studentů v daném semestru, jinak vrátí počet všech
 # úspěšných studentů.
 
-def count_passed(course: Course, semester: int) -> int:
+def count_passed(course: Course, semester: int | None) -> int:
     count = 0
 
     for c in course:

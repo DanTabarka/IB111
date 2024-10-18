@@ -42,7 +42,8 @@ def missing_visits(year: int, patients: list[Patient]) -> list[int]:
 # 89, 125, 82), (2020, 93, 120, 88)])› je ‹(93, False, False,
 # True)›.
 
-def patient_reports(patients: list[Patient]) -> list[Visit]:
+def patient_reports(patients: list[Patient]) \
+        -> list[tuple[int, bool, bool, bool]]:
     report = []
 
     for pat in patients:

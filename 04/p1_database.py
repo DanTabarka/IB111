@@ -15,6 +15,7 @@ Records = list[Record]
 Header = list[str]
 Table = tuple[Header, Records]
 
+
 def get_header(table: Table) -> Header:
     header, _ = table
     return header
@@ -43,7 +44,7 @@ def is_complete(table: Table) -> bool:
     _, records = table
     for i in range(len(records)):
         for j in range(len(records[0])):
-            if records[i][j] == None:
+            if records[i][j] is None:
                 return False
     return True
 
@@ -68,10 +69,10 @@ def values(name: str, table: Table) -> Record:
     header, records = table
     index = index_of_column(name, header)
     res = []
-    
-    for i in range(len(records)):
-        if records[i][index] != None:
-            res.append(records[i][index])
+
+    for rec in records:
+        if rec[index] is not None:
+            res.append(rec[index])
 
     return res
 
@@ -85,7 +86,10 @@ def drop_column(name: str, table: Table) -> Table:
     index = index_of_column(name, header)
 
     new_header = [col for i, col in enumerate(header) if i != index]
-    new_record = [[rec for i, rec in enumerate(record) if i != index] for record in records]
+    new_record = [
+        [rec for i, rec in enumerate(record) if i != index]
+        for record in records
+    ]
 
     new = (new_header, new_record)
     table = new

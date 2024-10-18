@@ -76,14 +76,14 @@ def average_nonmatching_distance(points: list[Point]) -> float:
     return total / pairs
 
 
-def main():
+def main() -> None:
     test_distance()
     test_leftmost_color()
     test_center_of_gravity()
     test_average_nonmatching_distance()
 
 
-def test_average_nonmatching_distance():
+def test_average_nonmatching_distance() -> None:
     r00 = (0.0, 0.0, "red")
     r10 = (1.0, 0.0, "red")
     b20 = (2.0, 0.0, "blue")
@@ -101,7 +101,7 @@ def test_average_nonmatching_distance():
     assert dist([r00, b10, g30, y20, w40]) == 2.0
 
 
-def test_center_of_gravity():
+def test_center_of_gravity() -> None:
     r00 = (0.0, 0.0, "red")
     r22 = (2.0, 2.0, "red")
     b20 = (2.0, 0.0, "blue")
@@ -124,7 +124,7 @@ def test_center_of_gravity():
     assert cog([r22, b20, g68, g00, g64, g86], "green") == (5.0, 4.5, "green")
 
 
-def test_leftmost_color():
+def test_leftmost_color() -> None:
     p1 = (0.0, 0.0, "white")
     p2 = (-2.0, 15.0, "red")
     p3 = (13.0, -15.0, "yellow")
@@ -138,7 +138,7 @@ def test_leftmost_color():
     assert leftmost_colour([p3, p4]) == "black"
 
 
-def test_distance():
+def test_distance() -> None:
     p1 = (0.0, 0.0, "white")
     p2 = (1.0, 0.0, "red")
 
