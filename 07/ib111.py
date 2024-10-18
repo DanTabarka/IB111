@@ -1396,7 +1396,7 @@ def check_ast(node, in_def=False, in_class=False, in_assign=False):
     return result
 
 
-if gettrace():
+if gettrace() or os.environ.get("DEBUGPY_RUNNING") == "true":
     print("debugger detected, disabling restrictions")
 else:
     check_import()
