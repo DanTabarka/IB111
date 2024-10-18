@@ -16,10 +16,15 @@ class TimeInterval:
     def shorten(self, interval: 'TimeInterval') -> None:
         all_seconds = self.seconds - interval.seconds   # -10
         self.seconds = all_seconds % 60                 # 50
-        all_minutes = self.minutes - interval.minutes - (1 if all_seconds < 0 else 0)  
+        all_minutes = self.minutes - interval.minutes - \
+            (1 if all_seconds < 0 else 0)
         self.minutes = all_minutes % 60
         all_hours = self.hours - interval.hours - (1 if all_minutes < 0 else 0)
         self.hours = all_hours
+        if self.hours < 0:
+            self.hours = 0
+            self.minutes = 0
+            self.seconds = 0
 
     # Metoda prodlouží interval o čas reprezentovaný parametrem
     # ‹interval›.
@@ -41,9 +46,9 @@ class TimeInterval:
 
 
 def main() -> None:
-    # for h, m, s in [(12, 3, 59), (14, 59, 59), (0, 0, 0),
-    #                 (0, 0, 1), (0, 12, 12)]:
-    #     assert TimeInterval(h, m, s).format() == (h, m, s)
+    for h, m, s in [(12, 3, 59), (14, 59, 59), (0, 0, 0),
+                    (0, 0, 1), (0, 12, 12)]:
+        assert TimeInterval(h, m, s).format() == (h, m, s)
 
     duration = TimeInterval(0, 0, 0)
     duration.extend(TimeInterval(0, 5, 30))
