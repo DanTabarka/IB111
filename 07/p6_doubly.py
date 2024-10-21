@@ -28,25 +28,55 @@ class DoubleLinkedList:
     # Metoda ‹append› přidá novou hodnotu na konec seznamu.
 
     def append(self, value: int) -> None:
-        pass
+        node = Node(value)
+        if self.tail is None:
+            self.tail = node
+            self.head = node
+        else:
+            self.tail.next = node
+            node.prev = self.tail
+            self.tail = node
+            
 
     # Metoda ‹prepend› naopak vloží novou hodnotu na začátek. Na
     # rozdíl od zabudovaného typu ‹list› je toto v principu levná
     # operace.
 
     def prepend(self, value: int) -> None:
-        pass
+        node = Node(value)
+        if self.head is None:
+            self.tail = node
+            self.head = node
+        else:
+            self.head.prev = node
+            node.next = self.head
+            self.head = node
 
     # Metoda ‹remove› odstraní ze seznamu libovolný uzel.
 
-    def remove(self, node: Node) -> None:
-        pass
+    def remove(self, node: Node) -> None: 
+        
+        if node == self.head:
+            self.head = node.next
+        if node == self.tail:
+            self.tail = node.prev
+
+        if node.prev is not None:
+            node.prev.next = node.next
+        if node.next is not None:
+            node.next.prev = node.prev
 
     # Konečně metoda ‹search› najde první uzel s danou hodnotu.
     # Když takový uzel neexistuje, vrátí ‹None›.
 
     def search(self, value: int) -> Node | None:
-        pass
+        node = self.head
+
+        while node is not None:
+            if node.value == value:
+                return node
+            node = node.next
+        return None
 
 
 def main() -> None:
