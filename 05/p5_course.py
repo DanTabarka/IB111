@@ -13,14 +13,14 @@ from ib111 import week_05  # noqa
 
 
 def modus(marks: dict[int, str]) -> set[str]:
-    dict = {}
+    d: dict[str, int] = {}
 
     for _, mark in marks.items():
-        dict[mark] = dict.get(mark, 0) + 1
+        d[mark] = d.get(mark, 0) + 1
 
-    max_count = max(dict.values()) if dict else 0
+    max_count = max(d.values()) if d else 0
 
-    most_frequent = [mark for mark, c in dict.items() if c == max_count]
+    most_frequent = [mark for mark, c in d.items() if c == max_count]
 
     return set(most_frequent)
 
