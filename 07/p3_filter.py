@@ -25,7 +25,22 @@ class LinkedList:
 
 def filter_linked(lower_bound: int,
                   num_list: LinkedList) -> LinkedList:
-    pass
+    tail = Node(0)
+    head = tail
+    index = num_list.head
+
+    while index is not None:
+        while index is not None and index.value < lower_bound:
+            index = index.next
+
+        if index is not None:
+            head.next = Node(index.value)
+            head = head.next
+            index = index.next
+
+    filtered = LinkedList()
+    filtered.head = tail.next
+    return filtered
 
 
 def main() -> None:
