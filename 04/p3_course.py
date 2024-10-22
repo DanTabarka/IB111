@@ -16,8 +16,7 @@ Course = list[tuple[Student, str]]
 def failed(course: Course) -> list[Student]:
     useless_students = []
 
-    for c in course:
-        student, grade = c
+    for student, grade in course:
         if grade == "F":
             useless_students.append(student)
 
@@ -33,10 +32,7 @@ def failed(course: Course) -> list[Student]:
 def count_passed(course: Course, semester: int | None) -> int:
     count = 0
 
-    for c in course:
-        student, grade = c
-        _, _, sem = student
-
+    for (_, _, sem), grade in course:
         if grade != "F" and (semester is None or semester == sem):
             count += 1
 
@@ -47,9 +43,7 @@ def count_passed(course: Course, semester: int | None) -> int:
 # takový student v kurzu ‹course› není, vrací ‹None›.
 
 def student_grade(uco: int, course: Course) -> str | None:
-    for c in course:
-        student, grade = c
-        s_uco, _, _ = student
+    for (s_uco, _, _), grade in course:
         if s_uco == uco:
             return grade
     return None
