@@ -28,8 +28,8 @@ from math import sqrt, sin, cos, radians, acos, pi, isclose
 #    typová kontrola. Typ funkce ‹perimeter› neměňte.
 
 
-def is_one_none(x: float | None, y: float | None, z: float | None) -> bool:
-    return x is None or y is None or z is None
+def all_not_none(arg0: float | None, arg1: float | None, arg2: float | None) -> bool:
+    return arg0 is not None and arg1 is not None and arg2 is not None
 
 
 def perimeter(a: float | None,
@@ -38,29 +38,19 @@ def perimeter(a: float | None,
               alpha: float | None,
               beta: float | None,
               gamma: float | None) -> float | None:
-    if not is_one_none(a, b, c):
-        assert a is not None and b is not None and c is not None
-        return perimeter_sss(a, b, c)
+    conditions = [
+        (perimeter_sss, (a, b, c)),
+        (perimeter_sas, (a, gamma, b)),
+        (perimeter_sas, (a, beta, c)),
+        (perimeter_sas, (b, alpha, c)),
+        (perimeter_asa, (beta, a, gamma)),
+        (perimeter_asa, (beta, c, alpha)),
+        (perimeter_asa, (alpha, b, gamma))
+    ]
 
-    if not is_one_none(a, gamma, b):
-        assert a is not None and b is not None and gamma is not None
-        return perimeter_sas(a, gamma, b)
-    if not is_one_none(a, beta, c):
-        assert a is not None and beta is not None and c is not None
-        return perimeter_sas(a, beta, c)
-    if not is_one_none(b, alpha, c):
-        assert alpha is not None and b is not None and c is not None
-        return perimeter_sas(b, alpha, c)
-
-    if not is_one_none(beta, a, gamma):
-        assert a is not None and beta is not None and gamma is not None
-        return perimeter_asa(beta, a, gamma)
-    if not is_one_none(alpha, b, gamma):
-        assert alpha is not None and b is not None and gamma is not None
-        return perimeter_asa(alpha, b, gamma)
-    if not is_one_none(alpha, c, beta):
-        assert alpha is not None and beta is not None and c is not None
-        return perimeter_asa(alpha, c, beta)
+    for func, (arg0, arg1, arg2) in conditions:
+        if all_not_none(arg0, arg1, arg2):
+            return func(arg0, arg1, arg2)
 
     return None
 
