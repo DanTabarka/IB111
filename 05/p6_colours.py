@@ -35,7 +35,7 @@ def calculate_distance(colour1: Colour, colour2: Colour) -> int:
 
 def nearest_colour(names: dict[str, Colour],
                    colour: Colour) -> set[str]:
-    min_distance = 255 + 255 + 255  # maximal possible distance
+    min_distance = 255 + 255 + 255 + 1  # maximal possible distance + 1
     nearest = set()
 
     for name, c in names.items():

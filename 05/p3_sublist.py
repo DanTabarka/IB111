@@ -36,7 +36,7 @@ def largest_common_sublist_sum(left: list[int], right: list[int]) -> int:
             elif left[idx_left] < right[idx_right]:
                 idx_left += 1
 
-    return largest_sum if largest_sum > tmp_sum else tmp_sum
+    return max(largest_sum, tmp_sum)
 
 
 def main() -> None:
