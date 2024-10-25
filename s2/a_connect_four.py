@@ -1,6 +1,6 @@
 from ib111 import week_05  # noqa
 
-# hodnotit: ne/ano (umažte „ne/“ pro hodnocení kvality tohoto řešení)
+# hodnotit: ano (umažte „ne/“ pro hodnocení kvality tohoto řešení)
 
 
 # «Connect Four¹» je hra pro dva hráče, v češtině někdy nazývaná Cestovní nebo
@@ -52,7 +52,17 @@ Grid = list[list[str]]
 #   ["X", " ", "O", " ", "X", " ", " "]]›
 
 def to_matrix(grid: Grid) -> list[list[str]]:
-    pass
+    max_length = max([len(col) for col in grid])
+    matrix: list[list[str]] = [[] for _ in range(max_length)]
+
+    for row in range(max_length):
+        for col in grid:
+            if len(col) <= row:
+                matrix[max_length - row - 1].append(" ")
+            else:
+                matrix[max_length - row - 1].append(col[row])
+
+    return matrix
 
 
 # Dále pak implementujte proceduru ‹play›, která provede do zadané herní desky
@@ -65,8 +75,32 @@ def to_matrix(grid: Grid) -> list[list[str]]:
 # z hráčů nepřerušenou řadu «přesně čtyř» svých žetonů. Pokud tedy vhozením
 # žetonu vznikne nepřerušená řada více než čtyř žetonů, o výhru se nejedná.
 
+
+def have_4_in_direction(grid: Grid, player: str, column: int, height: int, tilt: int)\
+        -> bool:
+    left = 1
+    right = 1
+    while column - left > 0 \
+            and 0 <= height + left*tilt < len(grid[column - left]) \
+            and grid[column - left][height + left*tilt] == player:
+        left += 1
+    while column + right > 0 \
+            and 0 <= height - right*tilt < len(grid[column + right]) \
+            and grid[column + right][height - right*tilt] == player:
+        right += 1
+    return left + right - 1 >= 4
+
+
 def play(grid: Grid, player: str, column: int) -> bool:
-    pass
+    height = len(grid[column])
+    grid[column].append(player)
+
+    # 0 -> left to right
+    # -1 -> left-down to right-up
+    # 1 -> left-up to right-down
+    return have_4_in_direction(grid, player, column, height, 0) or \
+        have_4_in_direction(grid, player, column, height, -1) or \
+        have_4_in_direction(grid, player, column, height, 1)
 
 
 # Pro (textovou) vizualizaci je vám k dispozici soubor ‹game_connect_four.py›,

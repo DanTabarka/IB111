@@ -10,7 +10,9 @@ from ib111 import week_06  # noqa
 # tvaru T, dílek ‹{EAST}› je slepá ulice (z toho dílku je možné se posunout
 # pouze na východ, ale nikam jinam). Dovolujeme i prázdnou množinu, což je
 # dílek, z nějž se nedá pohnout nikam.
-
+#   N
+# W + E
+#   S
 Heading = int
 NORTH, EAST, SOUTH, WEST = 0, 1, 2, 3
 Tile = set[Heading]
@@ -29,8 +31,24 @@ Plan = dict[Position, Tile]
 # nějakým směrem opustit, pak v tomto směru o jednu pozici vedle leží další
 # dílek, a navíc je z tohoto dílku možné se zase vrátit.
 
+
+def opposite(direction: int) -> int:
+    return (direction + 2) % 4
+
+
 def is_correct(plan: Plan) -> bool:
-    pass
+    for coordinates, directions in plan.items():
+        for direction in directions:
+            x, y = coordinates
+            if direction % 2 == 0:      # up and down
+                y += direction - 1
+            else:                       # left and right
+                x -= direction - 2
+            if (x, y) not in plan or opposite(direction) not in plan[(x, y)]:
+                return False
+
+    return True
+        
 
 
 # Dále implementujte čistou funkci ‹run›, která bude simulovat pohyb robota
@@ -50,7 +68,34 @@ def is_correct(plan: Plan) -> bool:
 # • Pokud robot přijde na dílek, kde už někdy v minulosti byl, zastaví.
 
 def run(plan: Plan, start: Position) -> Position:
-    pass
+    seen: set[Position] = set()
+
+    direction = min(plan[start]) if plan[start] else 0
+
+    x, y = start
+
+    while len(plan[(x, y)]) > 0:
+        if (x, y) in seen:
+            break
+        seen.add((x, y))
+        
+        if direction not in plan[(x, y)]:
+            found = False
+            ### check direction + 1 and + 3
+            # for i in range(1, 4):
+            #     if (direction + i) % 4 in plan[(x, y)]:
+            #         direction = (direction + i) % 4
+            #         found = True
+            #         break
+            if not found:
+                break
+            
+        if direction % 2 == 0:      # up and down
+            y += direction - 1
+        else:                       # left and right
+            x -= direction - 2
+
+    return (x, y)
 
 
 def main() -> None:

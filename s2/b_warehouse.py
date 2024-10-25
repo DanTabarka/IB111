@@ -25,7 +25,16 @@ Package = tuple[int, int, int]  # amount, price, expiration date
 
 def remove_expired(warehouse: list[Package],
                    today: int) -> list[Package]:
-    pass
+    sorted_packages: list[Package] = []
+
+    for package in warehouse:
+        _, _, extiration_date = package
+        if extiration_date >= today:
+            sorted_packages.append(package)
+
+    return sorted_packages
+
+    
 
 
 # Dále pak implementujte funkci ‹try_sell›, která uskuteční prodej při zadaném
