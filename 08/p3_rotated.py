@@ -7,7 +7,16 @@ from ib111 import week_08  # noqa
 # Měli byste být schopni napsat řešení, jehož složitost je lineární.
 
 def is_cyclically_sorted(records: list[int]) -> bool:
-    pass
+    if len(records) == 0 or len(records) == 1:
+        return True
+
+    is_higher_count = 0
+
+    for i in range(len(records)):
+        if records[i] > records[(i + 1) % len(records)]:
+            is_higher_count += 1        # compare last and first index
+
+    return is_higher_count == 1
 
 
 def main() -> None:

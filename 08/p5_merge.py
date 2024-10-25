@@ -21,7 +21,39 @@ class LinkedList:
 # seznamů. Seznamy lze spojit v lineárním čase.
 
 def merge(left: LinkedList, right: LinkedList) -> LinkedList:
-    pass
+    if left.head is None:
+        return right
+    if right.head is None:
+        return left
+    
+    res_head = LinkedList()
+    # res_head.head = left.head if left.head.compare(right.head) >= 0 else right.head
+    if left.head.compare(right.head) <= 0:
+        res_head.head = left.head
+        left.head = left.head.next
+    else:
+        res_head.head = right.head
+        right.head = right.head.next
+
+    body = res_head.head
+    left_body, right_body = left.head, right.head
+    while left_body is not None and right_body is not None:
+        comparison = left_body.compare(right_body)
+
+        if comparison > 0:      # left is bigger
+            body.next = right_body
+            right_body = right_body.next
+        else:                   # right is bigger or equal
+            body.next = left_body
+            left_body = left_body.next
+        body = body.next
+
+    if left_body is not None:
+        body.next = left_body
+    elif right_body is not None:
+        body.next = right_body
+
+    return res_head
 
 
 def main() -> None:

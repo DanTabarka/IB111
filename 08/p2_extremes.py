@@ -12,7 +12,19 @@ Maxima = list[int]
 
 
 def local_extremes(values: list[int]) -> tuple[Minima, Maxima]:
-    pass
+    minima = []
+    maxima = []
+    last_index = len(values) - 1
+
+    for i, val in enumerate(values):
+        if (i == 0 or values[i - 1] > val) and \
+                (i == last_index or values[i + 1] > val):
+            minima.append(i)
+        if (i == 0 or values[i - 1] < val) and \
+                (i == last_index or values[i + 1] < val):
+            maxima.append(i)
+
+    return minima, maxima
 
 
 def main() -> None:
