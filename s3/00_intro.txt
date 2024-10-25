@@ -1,0 +1,14 @@
+# S.3. Sada úloh k třetímu bloku
+
+Ve třetím bloku jsou následující domácí úkoly:
+
+ • ‹a_minesweeper› – hra Minesweeper (hledání min),
+ • ‹b_family_tree› – práce se stromovou strukturou rodokmene,
+ • ‹c_navigate› – opět simulace pohybu robota (ovšem tentokrát s možností
+   volby cesty na křižovatkách),
+ • ‹d_alphametics› – řešení slovně-početních hádanek,
+ • ‹e_nonogram› – řešení malovaných křížovek,
+ • ‹f_numberlink› – řešení hry Numberlink.
+
+Ve všech těchto úkolech se vám může hodit rekurze, i když některé z nich
+mohou být rozumně řešitelné i bez ní.
