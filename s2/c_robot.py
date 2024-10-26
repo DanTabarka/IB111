@@ -37,17 +37,18 @@ def opposite(direction: int) -> int:
 
 
 def get_next_coordinates(direction: int, x: int, y: int):
-    return (x - (direction - 2) * (direction % 2), y + (direction - 1) * (1 - direction % 2))
+    return (x - (direction - 2) * (direction % 2),
+            y + (direction - 1) * (1 - direction % 2))
 
 
 def is_correct(plan: Plan) -> bool:
     for (x, y), directions in plan.items():
         for direction in directions:
             xn, yn = get_next_coordinates(direction, x, y)
-            if (xn, yn) not in plan or opposite(direction) not in plan[(xn, yn)]:
+            if (xn, yn) not in plan or \
+                    opposite(direction) not in plan[(xn, yn)]:
                 return False
     return True
-        
 
 
 # Dále implementujte čistou funkci ‹run›, která bude simulovat pohyb robota
@@ -68,16 +69,14 @@ def is_correct(plan: Plan) -> bool:
 
 def run(plan: Plan, start: Position) -> Position:
     seen: set[Position] = set()
-
     direction = min(plan[start]) if plan[start] else 0
-
     x, y = start
 
     while len(plan[(x, y)]) > 0:
         if (x, y) in seen:
             break
         seen.add((x, y))
-        
+
         if direction not in plan[(x, y)]:
             if (direction + 1) % 4 in plan[(x, y)]:
                 direction = (direction + 1) % 4

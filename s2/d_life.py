@@ -46,10 +46,97 @@ State = dict[Position, int]
 # Napište čistou funkci ‹evolve›, která dostane počáteční stav světa ‹initial›,
 # množinu „otrávených“ pozic ‹poison› a počet kol ‹generations› a vrátí stav
 # světa po zadaném počtu kol.
+directions = [(-1, -1), (0, -1), (1, -1), (-1, 0), \
+                    (1, 0), (-1, 1), (0, 1), (1, 1)]
+
+
+def delete_death(state: State):
+    to_delete = []
+    for coordinates, age in state.items():
+        if age >= 3:
+            age += 1
+        if age > 6:
+            to_delete.append(coordinates)
+    for kill in to_delete:
+        state.pop(kill, None)
+
+
+def born_new_points(state: State) -> State:
+    new_points = {}
+    for (x, y), value in state.items():
+        if value >= 3:
+            continue
+        
+        for newX, newY in directions:
+            neighbors = 0
+            xn, yn = newX + x, newY + y
+            color_balance = 0   # balance of near colors
+            if (xn, yn) in state:
+                continue    # already a point
+
+            for dirX, dirY in directions:
+                currentX, currentY = dirX + xn, dirY + yn
+                
+                if (currentX, currentY) in state and state[(currentX, currentY)] < 3:
+                    neighbors += 1
+                    color_balance += state[(currentX, currentY)] * 2 - 3
+                    # if color blue -> -1, if color red -> +1
+
+            if neighbors == 3 and (xn, yn):
+                new_points[(xn, yn)] = 1 if color_balance < 0 else 2
+    return new_points
+
+
+def dict_update(to_update: State, to_add: State) -> None:
+    for key, value in to_add.items():
+        to_update[key] = value
+
+
+def stay_alive_or_kill(state: State):
+    to_kill = []
+    for (x, y), value in state.items():
+        if value >= 3:
+            continue
+        
+        neighbors = 0
+        for newX, newY in directions:
+            xn, yn = newX + x, newY + y
+                
+            if (xn, yn) in state and state[(xn, yn)] < 3:
+                neighbors += 1
+
+        if 3 > neighbors or 5 < neighbors:
+            to_kill.append((xn, yn))
+    for kill in to_kill:
+        state[kill] = 3
+
+
+def kill_poison(state: State, poison: set[Position]):
+    for x, y in poison:
+        if (x, y) in state and state[(x, y)] < 3:
+            state[(x, y)] = 3
+        for dx, dy in directions:
+            newX, newY = x + dx, y + dy
+            if (newX, newY) in state and state[(newX, newY)] < 3:
+                state[(newX, newY)] = 3
+
 
 def evolve(initial: State, poison: set[Position],
            generations: int) -> State:
-    pass
+    state = initial.copy()
+    for _ in range(generations):
+        print(_)
+
+        delete_death(state)
+
+        new_points = born_new_points(state)
+        dict_update(state, new_points)
+
+        stay_alive_or_kill(state)
+
+        kill_poison(state, poison)
+
+    return state
 
 
 # Pro vizualizaci je vám k dispozici soubor ‹game_life.py›, který vložte do

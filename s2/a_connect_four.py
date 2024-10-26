@@ -76,8 +76,9 @@ def to_matrix(grid: Grid) -> list[list[str]]:
 # žetonu vznikne nepřerušená řada více než čtyř žetonů, o výhru se nejedná.
 
 
-def have_4_in_direction(grid: Grid, player: str, column: int, height: int, tilt: int)\
-        -> bool:
+def have_4_in_direction(
+    grid: Grid, player: str, column: int, height: int, tilt: int
+) -> bool:
     left = 1
     right = 1
     while column - left > 0 \

@@ -1,6 +1,6 @@
 from ib111 import week_07  # noqa
 
-# hodnotit: ne/ano (umažte „ne/“ pro hodnocení kvality tohoto řešení)
+# hodnotit: ano (umažte „ne/“ pro hodnocení kvality tohoto řešení)
 
 # Jistě už jste někdy slyšeli o hře Tetris. Pokud ne, vítejte v civilizaci!
 # Hledat můžete začít například tady: ‹https://duckduckgo.com/?q=tetris›.
@@ -92,7 +92,8 @@ class Tetris:
         falling_block_tiles = []
         self.falling_block_init = []
         for x, y in block:
-            if col + x < 0 or row + y < 0 or (col + x, row + y) in self.fixed_blocks:
+            if col + x < 0 or row + y < 0 or \
+                    (col + x, row + y) in self.fixed_blocks:
                 return False
             falling_block_tiles.append((col + x, row + y))
             self.falling_block_init.append((x, y))
@@ -130,7 +131,7 @@ class Tetris:
     def rotate_cw(self) -> None:
         falling_block_tiles = []
         new_init = []
-        
+
         for index, (x, y) in enumerate(self.falling_block_init):
             xn, yn = -y, x    # rotate
             col, row = self.falling_block[index]
@@ -145,14 +146,13 @@ class Tetris:
         self.falling_block_init = new_init.copy()
         self.falling_block = falling_block_tiles.copy()
 
-
     # Metoda ‹rotate_ccw› otočí padající blok proti směru hodinových ručiček
     # o 90 stupňů, je-li to možné.
 
     def rotate_ccw(self) -> None:
         falling_block_tiles = []
         new_init = []
-        
+
         for index, (x, y) in enumerate(self.falling_block_init):
             xn, yn = y, -x    # rotate
             col, row = self.falling_block[index]
@@ -181,13 +181,14 @@ class Tetris:
                 falling_block_tiles = self.falling_block
                 break
             falling_block_tiles.append((col, row + 1))
-            have_below = have_below or (col, row + 2) in self.fixed_blocks or row + 2 >= self.rows
+            have_below = have_below or (col, row + 2) in self.fixed_blocks \
+                or row + 2 >= self.rows
 
         if have_below:
             self.fixed_blocks.update(falling_block_tiles)
             self.falling_block = []
             self.has_falling_block = False
-        else:    
+        else:
             self.falling_block = falling_block_tiles.copy()
 
     # Metoda ‹drop› shodí padající blok směrem dolů (o tolik pozic, o kolik je
@@ -202,7 +203,8 @@ class Tetris:
             for i in range(len(falling_block_tiles)):
                 col, row = falling_block_tiles[i]
                 falling_block_tiles[i] = (col, row + 1)
-                have_below = have_below or (col, row + 2) in self.fixed_blocks or row + 2 >= self.rows
+                have_below = have_below or (col, row + 2) in self.fixed_blocks\
+                    or row + 2 >= self.rows
 
         self.fixed_blocks.update(falling_block_tiles)
         self.falling_block = []
