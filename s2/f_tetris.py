@@ -60,18 +60,24 @@ class Tetris:
     # Není žádný padající blok a skóre je nastaveno na 0.
 
     def __init__(self, cols: int, rows: int):
-        pass
+        self.cols = cols
+        self.rows = rows
+        self.fixed_blocks: set[Position] = set()
+        self.falling_block: list[Position] = []
+        self.falling_block_init: list[Position] = []
+        self.has_falling_block = False
+        self.score = 0
 
     # Čistá metoda ‹get_score› vrátí aktuální skóre.
 
     def get_score(self) -> int:
-        pass
+        return self.score
 
     # Metoda-predikát ‹has_block› vrátí ‹True› právě tehdy, existuje-li
     # padající blok.
 
     def has_block(self) -> bool:
-        pass
+        return self.has_falling_block
 
     # Metoda ‹add_block› přidá do hry padající blok na zadaných souřadnicích.
     # Pokud přidání bloku není možné (překrýval by se s již položenými
@@ -83,32 +89,89 @@ class Tetris:
 
     def add_block(self, block: list[Position],
                   col: int, row: int) -> bool:
-        pass
+        falling_block_tiles = []
+        self.falling_block_init = []
+        for x, y in block:
+            if col + x < 0 or row + y < 0 or (col + x, row + y) in self.fixed_blocks:
+                return False
+            falling_block_tiles.append((col + x, row + y))
+            self.falling_block_init.append((x, y))
+
+        self.falling_block = falling_block_tiles.copy()
+        self.has_falling_block = True
+        return True
 
     # Metoda ‹left› posune padající blok o jednu pozici doleva, je-li to možné.
     # Tato metoda, stejně jako všechny následující metody pohybu, bude volána
     # jen tehdy, existuje-li padající blok.
 
     def left(self) -> None:
-        pass
+        falling_block_tiles = []
+        for col, row in self.falling_block:
+            if col - 1 < 0 or (col - 1, row) in self.fixed_blocks:
+                return
+            falling_block_tiles.append((col - 1, row))
+        self.falling_block = falling_block_tiles.copy()
 
     # Metoda ‹right› posune padající blok o jednu pozici doprava,
     # je-li to možné.
 
     def right(self) -> None:
-        pass
+        falling_block_tiles = []
+        for col, row in self.falling_block:
+            if col + 1 >= self.cols or (col + 1, row) in self.fixed_blocks:
+                return
+            falling_block_tiles.append((col + 1, row))
+        self.falling_block = falling_block_tiles.copy()
 
     # Metoda ‹rotate_cw› otočí padající blok po směru hodinových ručiček o 90
     # stupňů, je-li to možné.
 
     def rotate_cw(self) -> None:
-        pass
+        falling_block_tiles = []
+        new_init = []
+        
+        for index, (x, y) in enumerate(self.falling_block_init):
+            xn, yn = -y, x    # rotate
+            new_init.append((xn, yn))
+            diff_x = xn - x
+            diff_y = yn - y
+            row, col = self.falling_block[index]
+            row += diff_x
+            col += diff_y
+            falling_block_tiles.append((row, col))
+            if (row, col) in self.fixed_blocks \
+                    or row < 0 or row >= self.rows \
+                    or col < 0 or col >= self.cols:
+                return
+
+        self.falling_block_init = new_init.copy()
+        self.falling_block = falling_block_tiles.copy()
+
 
     # Metoda ‹rotate_ccw› otočí padající blok proti směru hodinových ručiček
     # o 90 stupňů, je-li to možné.
 
     def rotate_ccw(self) -> None:
-        pass
+        falling_block_tiles = []
+        new_init = []
+        
+        for index, (x, y) in enumerate(self.falling_block_init):
+            xn, yn = y, -x    # rotate
+            new_init.append((xn, yn))
+            diff_x = xn - x
+            diff_y = yn - y
+            row, col = self.falling_block[index]
+            row += diff_x
+            col += diff_y
+            falling_block_tiles.append((row, col))
+            if (row, col) in self.fixed_blocks \
+                    or row < 0 or row >= self.rows \
+                    or col < 0 or col >= self.cols:
+                return
+
+        self.falling_block_init = new_init.copy()
+        self.falling_block = falling_block_tiles.copy()
 
     # Metoda ‹down› posune padající blok o jednu pozici směrem dolů.
     # Pokud takový posun není možný, kostky z padajícího bloku se napevno
@@ -116,7 +179,20 @@ class Tetris:
     # a skóre se zvýší o druhou mocninu počtu vymazaných řádků.
 
     def down(self) -> None:
-        pass
+        falling_block_tiles = []
+        have_below = False
+        for col, row in self.falling_block:
+            if row + 1 >= self.rows or (col, row + 1) in self.fixed_blocks:
+                return
+            falling_block_tiles.append((col, row + 1))
+            have_below = have_below or (col, row + 2) in self.fixed_blocks or row + 2 >= self.rows
+
+        if have_below:
+            self.fixed_blocks.update(falling_block_tiles)
+            self.falling_block = []
+            self.has_falling_block = False
+        else:    
+            self.falling_block = falling_block_tiles.copy()
 
     # Metoda ‹drop› shodí padající blok směrem dolů (o tolik pozic, o kolik je
     # to možné). Kostky z padajícího bloku se pak napevno umístí do herní
@@ -133,7 +209,7 @@ class Tetris:
     # tak grafické rozhraní pro vykreslení hry.
 
     def tiles(self) -> list[Position]:
-        pass
+        return self.falling_block + list(self.fixed_blocks)
 
 
 def main() -> None:

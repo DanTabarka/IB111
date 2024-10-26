@@ -1,6 +1,6 @@
 from ib111 import week_06  # noqa
 
-# hodnotit: ne/ano (umažte „ne/“ pro hodnocení kvality tohoto řešení)
+# hodnotit: ano (umažte „ne/“ pro hodnocení kvality tohoto řešení)
 
 # Představte si, že máme plán ve tvaru neomezené čtvercové sítě, na níž jsou
 # položeny čtvercové dílky s nákresy ulic či křižovatek (něco jako kartičky ve
@@ -36,17 +36,16 @@ def opposite(direction: int) -> int:
     return (direction + 2) % 4
 
 
-def is_correct(plan: Plan) -> bool:
-    for coordinates, directions in plan.items():
-        for direction in directions:
-            x, y = coordinates
-            if direction % 2 == 0:      # up and down
-                y += direction - 1
-            else:                       # left and right
-                x -= direction - 2
-            if (x, y) not in plan or opposite(direction) not in plan[(x, y)]:
-                return False
+def get_next_coordinates(direction: int, x: int, y: int):
+    return (x - (direction - 2) * (direction % 2), y + (direction - 1) * (1 - direction % 2))
 
+
+def is_correct(plan: Plan) -> bool:
+    for (x, y), directions in plan.items():
+        for direction in directions:
+            xn, yn = get_next_coordinates(direction, x, y)
+            if (xn, yn) not in plan or opposite(direction) not in plan[(xn, yn)]:
+                return False
     return True
         
 
@@ -80,20 +79,14 @@ def run(plan: Plan, start: Position) -> Position:
         seen.add((x, y))
         
         if direction not in plan[(x, y)]:
-            found = False
-            ### check direction + 1 and + 3
-            # for i in range(1, 4):
-            #     if (direction + i) % 4 in plan[(x, y)]:
-            #         direction = (direction + i) % 4
-            #         found = True
-            #         break
-            if not found:
+            if (direction + 1) % 4 in plan[(x, y)]:
+                direction = (direction + 1) % 4
+            elif (direction + 3) % 4 in plan[(x, y)]:
+                direction = (direction + 3) % 4
+            else:
                 break
-            
-        if direction % 2 == 0:      # up and down
-            y += direction - 1
-        else:                       # left and right
-            x -= direction - 2
+
+        x, y = get_next_coordinates(direction, x, y)
 
     return (x, y)
 
