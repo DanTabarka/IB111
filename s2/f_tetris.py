@@ -133,17 +133,14 @@ class Tetris:
         
         for index, (x, y) in enumerate(self.falling_block_init):
             xn, yn = -y, x    # rotate
-            new_init.append((xn, yn))
-            diff_x = xn - x
-            diff_y = yn - y
-            row, col = self.falling_block[index]
-            row += diff_x
-            col += diff_y
-            falling_block_tiles.append((row, col))
-            if (row, col) in self.fixed_blocks \
-                    or row < 0 or row >= self.rows \
-                    or col < 0 or col >= self.cols:
+            col, row = self.falling_block[index]
+            new_col, new_row = col + (xn - x), row + (yn - y)
+            if (new_col, new_row) in self.fixed_blocks \
+                    or new_row < 0 or new_row >= self.rows \
+                    or new_col < 0 or new_col >= self.cols:
                 return
+            new_init.append((xn, yn))
+            falling_block_tiles.append((new_col, new_row))
 
         self.falling_block_init = new_init.copy()
         self.falling_block = falling_block_tiles.copy()
@@ -158,17 +155,14 @@ class Tetris:
         
         for index, (x, y) in enumerate(self.falling_block_init):
             xn, yn = y, -x    # rotate
-            new_init.append((xn, yn))
-            diff_x = xn - x
-            diff_y = yn - y
-            row, col = self.falling_block[index]
-            row += diff_x
-            col += diff_y
-            falling_block_tiles.append((row, col))
-            if (row, col) in self.fixed_blocks \
-                    or row < 0 or row >= self.rows \
-                    or col < 0 or col >= self.cols:
+            col, row = self.falling_block[index]
+            new_col, new_row = col + (xn - x), row + (yn - y)
+            if (new_col, new_row) in self.fixed_blocks \
+                    or new_row < 0 or new_row >= self.rows \
+                    or new_col < 0 or new_col >= self.cols:
                 return
+            new_init.append((xn, yn))
+            falling_block_tiles.append((new_col, new_row))
 
         self.falling_block_init = new_init.copy()
         self.falling_block = falling_block_tiles.copy()
@@ -183,7 +177,9 @@ class Tetris:
         have_below = False
         for col, row in self.falling_block:
             if row + 1 >= self.rows or (col, row + 1) in self.fixed_blocks:
-                return
+                have_below = True
+                falling_block_tiles = self.falling_block
+                break
             falling_block_tiles.append((col, row + 1))
             have_below = have_below or (col, row + 2) in self.fixed_blocks or row + 2 >= self.rows
 
@@ -200,7 +196,17 @@ class Tetris:
     # o druhou mocninu počtu vymazaných řádků.
 
     def drop(self) -> None:
-        pass
+        falling_block_tiles = self.falling_block.copy()
+        have_below = False
+        while not have_below:
+            for i in range(len(falling_block_tiles)):
+                col, row = falling_block_tiles[i]
+                falling_block_tiles[i] = (col, row + 1)
+                have_below = have_below or (col, row + 2) in self.fixed_blocks or row + 2 >= self.rows
+
+        self.fixed_blocks.update(falling_block_tiles)
+        self.falling_block = []
+        self.has_falling_block = False
 
     # Čistá metoda ‹tiles› vrátí seznam všech pozic, na nichž má být vykreslena
     # kostka – tedy jednak všechny položené kostky v herní oblasti, jednak
