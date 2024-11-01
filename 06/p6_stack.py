@@ -22,7 +22,7 @@ from ib111 import week_06  # noqa
 
 
 def valid_stack_ops(pushed: list[int], popped: list[int]) -> bool:
-    stack = []
+    stack: list[int] = []
     pushed_copy = pushed.copy()
 
     for popp in popped:

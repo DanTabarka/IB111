@@ -36,7 +36,7 @@ def opposite(direction: int) -> int:
     return (direction + 2) % 4
 
 
-def get_next_coordinates(direction: int, x: int, y: int):
+def get_next_coordinates(direction: int, x: int, y: int) -> tuple[int, int]:
     return (x - (direction - 2) * (direction % 2),
             y + (direction - 1) * (1 - direction % 2))
 

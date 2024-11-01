@@ -38,7 +38,7 @@ def histogram(data: list[int], max_amplitude: int,
         avg = round(float(summary) / (len(filtered_amplitudes) - index))
         buckets.append(avg)
 
-    bucket_counts = {}      # dictionarring
+    bucket_counts: dict[int, int] = {}      # dictionarring
     for imp in buckets:
         bucket_counts[imp] = bucket_counts.get(imp, 0) + 1
 

@@ -188,6 +188,7 @@ class Tetris:
             self.fixed_blocks.update(falling_block_tiles)
             self.falling_block = []
             self.has_falling_block = False
+            self.score += 1
         else:
             self.falling_block = falling_block_tiles.copy()
 
@@ -209,6 +210,7 @@ class Tetris:
         self.fixed_blocks.update(falling_block_tiles)
         self.falling_block = []
         self.has_falling_block = False
+        self.score += 1
 
     # Čistá metoda ‹tiles› vrátí seznam všech pozic, na nichž má být vykreslena
     # kostka – tedy jednak všechny položené kostky v herní oblasti, jednak
