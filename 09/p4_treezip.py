@@ -38,8 +38,19 @@ class TupleTree:
 # Očekávaná složitost řešení je lineární vůči součtu počtu uzlů
 # v obou stromech.
 
-def treezip(it, st):
-    pass
+def treezip(it: IntTree, st: StrTree) -> TupleTree:
+    if it is None or st is None:
+        return None
+
+    zip = TupleTree((it.value, st.value))
+
+    if it.left is not None and st.left is not None:
+        zip.left = treezip(it.left, st.left)
+
+    if it.right is not None and st.right is not None:
+        zip.right = treezip(it.right, st.right)
+
+    return zip
 
 
 def main() -> None:

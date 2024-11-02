@@ -15,8 +15,22 @@ class Tree:
 # uložen celkový počet jeho potomků (tedy včetně nepřímých).
 # Správné řešení má složitost lineární vůči počtu uzlů stromu.
 
-def count_children(tree) -> None:
-    pass
+def count_children(tree: Tree) -> None:
+    if tree is None:
+        return
+
+    recursive_childrens(tree)
+
+
+def recursive_childrens(tree: Tree) -> int:
+    count = 0
+    tree.value = count
+
+    for child in tree.children:
+        count += recursive_childrens(child)
+
+    tree.value += count
+    return count + 1
 
 
 def main() -> None:

@@ -34,7 +34,27 @@ class Tree:
 # původního stromu.
 
 def prune(tree: Tree, keep: set[int]) -> None:
-    pass
+    if tree is None or tree.root is None:
+        return
+    
+    head = tree.root
+
+    if head.value not in keep:
+        tree.root = None
+
+    recursive(head, keep)
+
+
+def recursive(node: Node | None, keep: set[int]) -> None:
+    if node is None:
+        return
+    if node.left is not None and node.left.value not in keep:
+        node.left = None
+    if node.right is not None and node.right.value not in keep:
+        node.right = None
+
+    recursive(node.left, keep)
+    recursive(node.right, keep)
 
 
 def main() -> None:

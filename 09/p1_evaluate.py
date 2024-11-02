@@ -1,6 +1,5 @@
 from ib111 import week_09  # noqa
 
-
 # V tomto příkladu budeme pracovat se stromy, které reprezentují
 # aritmetické výrazy. Tyto mají následující strukturu:
 #
@@ -10,6 +9,7 @@ from ib111 import week_09  # noqa
 #    reprezentují operandy.
 #
 # Žádné jiné uzly ve stromě přítomny nebudou.
+
 
 class Tree:
     def __init__(self, value: str | int,
@@ -28,8 +28,18 @@ def leaf(value: int) -> Tree:
 # popsaného stromu a vrátí výsledek vyhodnocení výrazu, který
 # tento strom reprezentuje.
 
-def evaluate(tree) -> int:
-    pass
+
+def evaluate(tree: Tree) -> int:
+    assert tree is not None
+    if isinstance(tree.value, str):
+        assert tree.left is not None and tree.right is not None
+        op = tree.value
+        assert op is not None
+        if op == "+":
+            return evaluate(tree.left) + evaluate(tree.right)
+        return evaluate(tree.left) * evaluate(tree.right)
+
+    return tree.value if isinstance(tree.value, int) else 0
 
 
 def main() -> None:

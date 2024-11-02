@@ -41,6 +41,9 @@ def example_tree() -> TreeDict:
 
 def is_tree(tree: TreeDict) -> bool:
     pass
+            
+    
+
 
 
 # Dále napište čistou funkci ‹make_tree›, která ze zadaného

@@ -30,8 +30,25 @@ def leaf(value: str) -> Tree:
 # notaci. Každý prvek bude odpovídat právě jednomu uzlu vstupního
 # stromu.
 
-def to_rpn(tree) -> list[str]:
-    pass
+def to_rpn(tree: Tree) -> list[str]:
+    res: list[str] = []
+
+    recursive(tree, res)
+
+    return res
+
+
+def recursive(tree: Tree | None, res: list[str]) -> None:
+    if tree is None:
+        return
+    if isinstance(tree.value, int):
+        res.append(str(tree.value))
+        return
+
+    recursive(tree.left, res)
+    recursive(tree.right, res)
+
+    res.append(tree.value)
 
 
 def main() -> None:
