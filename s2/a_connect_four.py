@@ -110,10 +110,10 @@ def play(grid: Grid, player: str, column: int) -> bool:
 
 
 def main() -> None:
-    grid: Grid = [[],[]]
+    grid: Grid = [[], []]
     assert not play(grid, 'X', 1)
-    
-    grid: Grid = [['X'], [], ['O', 'X'], [], ['X', 'O', 'O'], [], []]
+
+    grid = [['X'], [], ['O', 'X'], [], ['X', 'O', 'O'], [], []]
     assert to_matrix(grid) == [
         [" ", " ", " ", " ", "O", " ", " "],
         [" ", " ", "X", " ", "O", " ", " "],
