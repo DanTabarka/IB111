@@ -85,7 +85,7 @@ def have_4_in_direction(
             and 0 <= height + left*tilt < len(grid[column - left]) \
             and grid[column - left][height + left*tilt] == player:
         left += 1
-    while column + right > 0 \
+    while column + right < len(grid) \
             and 0 <= height - right*tilt < len(grid[column + right]) \
             and grid[column + right][height - right*tilt] == player:
         right += 1
@@ -110,6 +110,9 @@ def play(grid: Grid, player: str, column: int) -> bool:
 
 
 def main() -> None:
+    grid: Grid = [[],[]]
+    assert not play(grid, 'X', 1)
+    
     grid: Grid = [['X'], [], ['O', 'X'], [], ['X', 'O', 'O'], [], []]
     assert to_matrix(grid) == [
         [" ", " ", " ", " ", "O", " ", " "],
