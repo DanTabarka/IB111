@@ -25,8 +25,8 @@ class LinkedList:
 
 def filter_linked(lower_bound: int,
                   num_list: LinkedList) -> LinkedList:
-    tail = Node(0)
-    head = tail
+    head = Node(0)
+    tail = head
     index = num_list.head
 
     while index is not None:
@@ -34,12 +34,12 @@ def filter_linked(lower_bound: int,
             index = index.next
 
         if index is not None:
-            head.next = Node(index.value)
-            head = head.next
+            tail.next = Node(index.value)
+            tail = tail.next
             index = index.next
 
     filtered = LinkedList()
-    filtered.head = tail.next
+    filtered.head = head.next
     return filtered
 
 

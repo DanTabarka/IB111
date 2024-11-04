@@ -34,7 +34,7 @@ class RingBuffer:
         if self.count >= self.size:
             return False
 
-        if self.storage.size() < self.size:
+        if self.storage.size() < self.size:     # to full ring buffer
             self.storage.append(value)
         else:
             self.storage.set((self.start + self.count) % self.size, value)
