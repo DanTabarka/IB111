@@ -36,7 +36,6 @@ class DoubleLinkedList:
             self.tail.next = node
             node.prev = self.tail
             self.tail = node
-            
 
     # Metoda ‹prepend› naopak vloží novou hodnotu na začátek. Na
     # rozdíl od zabudovaného typu ‹list› je toto v principu levná
@@ -46,16 +45,15 @@ class DoubleLinkedList:
         node = Node(value)
         if self.head is None:
             self.tail = node
-            self.head = node
         else:
             self.head.prev = node
             node.next = self.head
-            self.head = node
+        self.head = node
 
     # Metoda ‹remove› odstraní ze seznamu libovolný uzel.
 
-    def remove(self, node: Node) -> None: 
-        
+    def remove(self, node: Node) -> None:
+
         if node == self.head:
             self.head = node.next
         if node == self.tail:
