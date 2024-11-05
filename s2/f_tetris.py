@@ -188,7 +188,8 @@ class Tetris:
             self.fixed_blocks.update(falling_block_tiles)
             self.falling_block = []
             self.has_falling_block = False
-            self.score += 1
+            # self.score += 1
+            self.calculate_score()
         else:
             self.falling_block = falling_block_tiles.copy()
 
@@ -210,7 +211,47 @@ class Tetris:
         self.fixed_blocks.update(falling_block_tiles)
         self.falling_block = []
         self.has_falling_block = False
-        self.score += 1
+        # self.score += 1
+        self.calculate_score()
+
+    def calculate_score(self) -> None:
+        rows_group: dict[int, list[int]] = {}
+        for col, row in self.fixed_blocks:
+            if rows_group.get(row) is None:
+                rows_group[row] = [col]
+            else:
+                rows_group[row].append(col)
+
+        rows_filled = 0
+        rows_to_delete: list[int] = []
+        for row, row_cols in rows_group.items():
+            if len(row_cols) == self.cols:
+                rows_to_delete.append(row)
+                rows_filled += 1
+        self.delete_rows_and_update(rows_to_delete)
+        self.score += rows_filled ** 2
+
+    def delete_rows_and_update(self, rows_to_delete) -> None:
+        for row_to_delete in rows_to_delete:
+            for col, row in self.fixed_blocks.copy():
+                if row == row_to_delete:
+                    self.fixed_blocks.remove((col, row))
+
+        # shift deleted rows
+        for row_to_delete in rows_to_delete:
+            for col, row in self.fixed_blocks.copy():
+                bigger = self.count_bigger_than(rows_to_delete, row)
+                if bigger > 0:
+                    self.fixed_blocks.remove((col, row))
+                    self.fixed_blocks.add((col, row + bigger))
+
+    def count_bigger_than(self, rows: list[int], row: int) -> int:
+        count = 0
+        for r in rows:
+            if r > row:
+                count += 1
+        return count
+
 
     # Čistá metoda ‹tiles› vrátí seznam všech pozic, na nichž má být vykreslena
     # kostka – tedy jednak všechny položené kostky v herní oblasti, jednak
