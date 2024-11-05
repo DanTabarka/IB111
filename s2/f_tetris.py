@@ -252,7 +252,6 @@ class Tetris:
                 count += 1
         return count
 
-
     # Čistá metoda ‹tiles› vrátí seznam všech pozic, na nichž má být vykreslena
     # kostka – tedy jednak všechny položené kostky v herní oblasti, jednak
     # všechny kostky tvořící padající blok. Na pořadí pozic v seznamu nezáleží.
