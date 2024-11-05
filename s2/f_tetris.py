@@ -231,7 +231,7 @@ class Tetris:
         self.delete_rows_and_update(rows_to_delete)
         self.score += rows_filled ** 2
 
-    def delete_rows_and_update(self, rows_to_delete) -> None:
+    def delete_rows_and_update(self, rows_to_delete: list[int]) -> None:
         for row_to_delete in rows_to_delete:
             for col, row in self.fixed_blocks.copy():
                 if row == row_to_delete:

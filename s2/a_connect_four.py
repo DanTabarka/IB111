@@ -92,6 +92,17 @@ def have_4_in_direction(
     return left + right - 1 >= 4
 
 
+def have_4_in_col(
+    grid: Grid, player: str, column: int, height: int) -> bool:
+    count = 0
+    row = len(grid[column]) - 1
+    while row >= 0 \
+            and grid[column][row] == player:
+        count += 1
+        row -= 1
+    return count >= 4
+
+
 def play(grid: Grid, player: str, column: int) -> bool:
     height = len(grid[column])
     grid[column].append(player)
@@ -101,7 +112,8 @@ def play(grid: Grid, player: str, column: int) -> bool:
     # 1 -> left-up to right-down
     return have_4_in_direction(grid, player, column, height, 0) or \
         have_4_in_direction(grid, player, column, height, -1) or \
-        have_4_in_direction(grid, player, column, height, 1)
+        have_4_in_direction(grid, player, column, height, 1) or \
+        have_4_in_col(grid, player, column, height)
 
 
 # Pro (textovou) vizualizaci je vám k dispozici soubor ‹game_connect_four.py›,
