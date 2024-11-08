@@ -89,7 +89,7 @@ def have_4_in_direction(
             and 0 <= height - right*tilt < len(grid[column + right]) \
             and grid[column + right][height - right*tilt] == player:
         right += 1
-    return left + right - 1 >= 4
+    return left + right - 1 == 4
 
 
 def have_4_in_col(grid: Grid, player: str, column: int) -> bool:
@@ -99,7 +99,7 @@ def have_4_in_col(grid: Grid, player: str, column: int) -> bool:
             and grid[column][row] == player:
         count += 1
         row -= 1
-    return count >= 4
+    return count == 4
 
 
 def play(grid: Grid, player: str, column: int) -> bool:

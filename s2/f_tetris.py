@@ -188,7 +188,6 @@ class Tetris:
             self.fixed_blocks.update(falling_block_tiles)
             self.falling_block = []
             self.has_falling_block = False
-            # self.score += 1
             self.calculate_score()
         else:
             self.falling_block = falling_block_tiles.copy()
@@ -200,19 +199,23 @@ class Tetris:
 
     def drop(self) -> None:
         falling_block_tiles = self.falling_block.copy()
-        have_below = False
-        while not have_below:
+        while not self.is_some_block_at_bottom(falling_block_tiles):
             for i in range(len(falling_block_tiles)):
                 col, row = falling_block_tiles[i]
                 falling_block_tiles[i] = (col, row + 1)
-                have_below = have_below or (col, row + 2) in self.fixed_blocks\
-                    or row + 2 >= self.rows
 
         self.fixed_blocks.update(falling_block_tiles)
         self.falling_block = []
         self.has_falling_block = False
-        # self.score += 1
         self.calculate_score()
+
+    def is_some_block_at_bottom(self, falling_block_tiles: list[Position]) -> bool:
+        for i in range(len(falling_block_tiles)):
+            col, row = falling_block_tiles[i]
+            if (col, row + 1) in self.fixed_blocks or row + 1 >= self.rows:
+                return True
+        return False
+        
 
     def calculate_score(self) -> None:
         rows_group: dict[int, list[int]] = {}
@@ -263,6 +266,11 @@ class Tetris:
 
 
 def main() -> None:
+    tetris = Tetris(4, 4)
+    tetris.add_block([(3, 3)], 0, 0)
+    tetris.drop()
+    print(tetris.tiles())
+
     tetris = Tetris(10, 22)
 
     assert tetris.get_score() == 0
